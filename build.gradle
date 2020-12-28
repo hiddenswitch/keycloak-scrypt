@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+    id 'java-library'
+    id 'com.github.johnrengelman.shadow' version "$shadowPluginVersion"
+}
+
+repositories {
+    mavenLocal()
+    maven {
+        url = uri('https://repo.maven.apache.org/maven2/')
+    }
+}
+
+dependencies {
+    compileOnly "org.jboss.logging:jboss-logging:$jbossLoggingVersion"
+    compileOnly "org.keycloak:keycloak-core:$keycloakVersion"
+    compileOnly "org.keycloak:keycloak-server-spi:$keycloakVersion"
+    compileOnly "org.keycloak:keycloak-server-spi-private:$keycloakVersion"
+    implementation "com.lambdaworks:scrypt:1.4.0"
+}
+
+group = 'com.hiddenswitch'
+version = '1.0.0'
+description = 'Keycloak Scrypt'
+java.sourceCompatibility = JavaVersion.VERSION_1_8
+
+artifacts {
+    archives shadowJar
+}
