@@ -8,15 +8,10 @@ import org.keycloak.models.KeycloakSessionFactory;
 
 public class ScryptHashProviderFactory implements PasswordHashProviderFactory {
 
-	public static final String ID = "scrypt";
-	public static final int DEFAULT_N = 16384;
-	public static final int DEFAULT_R = 8;
-	public static final int DEFAULT_P = 1;
-
 
 	@Override
 	public PasswordHashProvider create(KeycloakSession session) {
-		return new ScryptHashProvider(ID, DEFAULT_N, DEFAULT_R, DEFAULT_P);
+		return new ScryptHashProvider(ScryptHashProvider.ID, ScryptHashProvider.DEFAULT_N, ScryptHashProvider.DEFAULT_R, ScryptHashProvider.DEFAULT_P);
 	}
 
 	@Override
@@ -35,6 +30,6 @@ public class ScryptHashProviderFactory implements PasswordHashProviderFactory {
 
 	@Override
 	public String getId() {
-		return ID;
+		return ScryptHashProvider.ID;
 	}
 }

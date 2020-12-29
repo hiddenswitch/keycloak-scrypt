@@ -6,6 +6,10 @@ import org.keycloak.models.PasswordPolicy;
 import org.keycloak.models.credential.PasswordCredentialModel;
 
 public class ScryptHashProvider implements PasswordHashProvider {
+	public static final String ID = "scrypt";
+	public static final int DEFAULT_N = 16384;
+	public static final int DEFAULT_R = 8;
+	public static final int DEFAULT_P = 1;
 	private final String id;
 	private final int n;
 	private final int r;

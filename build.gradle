@@ -17,6 +17,16 @@ dependencies {
     compileOnly "org.keycloak:keycloak-server-spi:$keycloakVersion"
     compileOnly "org.keycloak:keycloak-server-spi-private:$keycloakVersion"
     implementation "com.lambdaworks:scrypt:1.4.0"
+
+    testCompile "org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion"
+    testCompile "org.junit.jupiter:junit-jupiter-params:$junitJupiterVersion"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion"
+    testCompile "org.testcontainers:testcontainers:1.15.1"
+    testCompile "org.testcontainers:junit-jupiter:1.15.1"
+    testImplementation "org.keycloak:keycloak-server-spi:$keycloakVersion"
+    testImplementation "org.keycloak:keycloak-server-spi-private:$keycloakVersion"
+    testImplementation platform("org.keycloak.bom:keycloak-bom-parent:$keycloakVersion")
+    testImplementation(group: 'org.keycloak', name: 'keycloak-admin-client', version: "$keycloakVersion")
 }
 
 group = 'com.hiddenswitch'
@@ -26,4 +36,17 @@ java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 artifacts {
     archives shadowJar
+}
+
+shadowJar {
+    relocate 'com.lambdaworks', 'com.hiddenswitch.scrypt'
+    archiveClassifier.set('')
+    archiveVersion.set('')
+}
+
+test {
+    dependsOn += shadowJar
+    systemProperty("com.hiddenswitch.keycloak.test.artifact.path", shadowJar.archiveFile.get().asFile.absolutePath)
+    systemProperty("com.hiddenswitch.keycloak.test.keycloak.version", keycloakVersion)
+    useJUnitPlatform()
 }
